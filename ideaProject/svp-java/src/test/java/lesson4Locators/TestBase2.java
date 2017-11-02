@@ -1,4 +1,4 @@
-package lesson3BrowserLaunch;
+package lesson4Locators;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,10 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-class TestBase1 {
+class TestBase2 {
 
 //------ Variables
-    WebDriver driver;
-
+    protected WebDriver driver;
 
 //----------------------------------------------------------------------------------------------------
     //------ Driver Service functions
@@ -41,7 +40,7 @@ class TestBase1 {
 
 
     private void ieLaunch(){        driver = new InternetExplorerDriver();   }
-    private void edgeLaucnh(){      driver = new EdgeDriver();}
+    private void edgeLaunch(){      driver = new EdgeDriver();}
 
     protected void browserLaunch(String browserName){
         switch (browserName) {
@@ -50,13 +49,11 @@ class TestBase1 {
             case "firefoxLegacy"  : fireFoxLegacyLaunch(); break;
             case "firefoxNightly"  : ffNightlyLaunch(); break;
             case "ie"       : ieLaunch(); break;
-            case "edge"     : edgeLaucnh(); break;
+            case "edge"     : edgeLaunch(); break;
             default         : Assert.fail("Invalid browser name!");
         }
 
     }
-
-
 
     protected void waitForElementAppears(By locator, Integer timeOutSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeOutSeconds);
@@ -68,6 +65,9 @@ class TestBase1 {
 
 //----------------------------------------------------------------------------------------------------
 
+    // Не очень хорошее решение
+    // Обычно я использую TesnNG - там удобнее реализовано. На этом курсе в учебных целях испольую JUnit
+    // Если будет время, разберусь как корректно сделать в JUnit 4
     @After
     public void stop(){
         driver.quit();
