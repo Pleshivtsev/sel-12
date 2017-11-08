@@ -39,9 +39,9 @@ public class Task10RightPage extends TestBase3 {
         String campaignPrice1 = product1.getCampaignPrice();
         String campaignPrice2 = product2.getCampaignPrice();
 
-        if (!name1.equals(name2))                   result.concat("Название не совпадает;");
-        if (!regularPrice1.equals(regularPrice2))   result.concat(" Обычная цена не совпадает;");
-        if (!campaignPrice1.equals(campaignPrice2)) result.concat(" Акционная цена не совпадает;");
+        if (!name1.equals(name2))                   result = result.concat("Название не совпадает;");
+        if (!regularPrice1.equals(regularPrice2))   result = result.concat(" Обычная цена не совпадает;");
+        if (!campaignPrice1.equals(campaignPrice2)) result = result.concat(" Акционная цена не совпадает;");
 
         return result;
     }
@@ -74,16 +74,16 @@ public class Task10RightPage extends TestBase3 {
 
     private String verifyRegularPrice(WebElement regularPriceElement){
         String result = "";
-         if (!regularPriceElement.getTagName().equals("S")) result.concat(" Обычная цена не зачеркнута;");
+         if (!regularPriceElement.getTagName().equals("s")) result = result.concat(" Обычная цена не зачеркнута;");
 
          String color = regularPriceElement.getCssValue("color");
          String strBuff = color.split("[\\(\\)]")[1];
          String[] channels = strBuff.split(",");
-         String R = channels[0];
-         String G = channels[1];
-         String B = channels[2];
+         String R = channels[0].trim();
+         String G = channels[1].trim();
+         String B = channels[2].trim();
 
-         if (! (R.equals(G) || G.equals(B))) result.concat(" Обычная цена не серая;");
+         if (! (R.equals(G) && G.equals(B))) result = result.concat(" Обычная цена не серая;");
 
         return result;
     }
@@ -94,11 +94,10 @@ public class Task10RightPage extends TestBase3 {
         String color = campaignPriceElement.getCssValue("color");
         String strBuff = color.split("[\\(\\)]")[1];
         String[] channels = strBuff.split(",");
-        String R = channels[0];
-        String G = channels[1];
-        String B = channels[2];
+        String G = channels[1].trim();
+        String B = channels[2].trim();
 
-        if (! (G.equals("0") || B.equals(0))) result.concat(" Акционная цена не красная;");
+        if (! (G.equals("0") && B.equals("0"))) result = result.concat(" Акционная цена не красная;");
 
         return result;
     }
@@ -108,8 +107,8 @@ public class Task10RightPage extends TestBase3 {
         Dimension regularPriceSize = regularPriceElement.getSize();
         Dimension campaignPriceSize = campaignPriceElement.getSize();
 
-        if (!(regularPriceSize.height > campaignPriceSize.height || regularPriceSize.width > campaignPriceSize.width))
-            result.concat(" Размер элемента акционной цены не больше;");
+        if (!((campaignPriceSize.height > regularPriceSize.height) && (campaignPriceSize.width > regularPriceSize.width)))
+            result = result.concat(" Размер элемента акционной цены не больше;");
 
         return result;
     }
@@ -123,9 +122,9 @@ public class Task10RightPage extends TestBase3 {
         regularPriceElement = campaignElements.get(0).findElement(HomePage.productRegularPriceLocator);
         campaignPriceElement = campaignElements.get(0).findElement(HomePage.productCampaignPriceLocator);
 
-        result.concat(verifyRegularPrice(regularPriceElement));
-        result.concat(verifyCampaignPrice(campaignPriceElement));
-        result.concat(verifyCampaignPriceBigger(regularPriceElement, campaignPriceElement));
+        result = result.concat(verifyRegularPrice(regularPriceElement));
+        result = result.concat(verifyCampaignPrice(campaignPriceElement));
+        result = result.concat(verifyCampaignPriceBigger(regularPriceElement, campaignPriceElement));
 
         return result;
     }
@@ -140,9 +139,9 @@ public class Task10RightPage extends TestBase3 {
         regularPriceElement = productContainer.findElement(ProductPage.regularPriceLocator);
         campaignPriceElement = productContainer.findElement(ProductPage.campaignPriceLocator);
 
-        result.concat(verifyRegularPrice(regularPriceElement));
-        result.concat(verifyCampaignPrice(campaignPriceElement));
-        result.concat(verifyCampaignPriceBigger(regularPriceElement, campaignPriceElement));
+        result = result.concat(verifyRegularPrice(regularPriceElement));
+        result = result.concat(verifyCampaignPrice(campaignPriceElement));
+        result = result.concat(verifyCampaignPriceBigger(regularPriceElement, campaignPriceElement));
 
         return result;
     }
@@ -155,22 +154,24 @@ public class Task10RightPage extends TestBase3 {
        try {
            Product productFromHome;
            Product productFromPage;
-           String result ="";
+           String homeResult ="";
+           String pageResult ="";
+           String compareResult ="";
 
            openHomePage(driver);                                    // Открыли домашнюю страницу
            productFromHome = getProductFromHomepage(driver);        // Загрузили данные о товаре в объект productFromHome
-           result.concat(verifyProductStyleOnHome(driver));         // Проверили стили на главной странице
-           System.out.println("Ошибки на домашней странице: " + result);
+           homeResult = homeResult.concat(verifyProductStyleOnHome(driver));         // Проверили стили на главной странице
+           System.out.println("Ошибки на домашней странице: " + homeResult);
 
            openProductPage(driver);                                 // Открыли страницу с товаром
            productFromPage = getProductFromProductPage(driver);     // Загрузили данные о товаре в объект productFromPage
-           result.concat(verifyProductStyleOnPage(driver));         // Проверили стили на продуктовой странице
-           System.out.println("Ошибки на продуктовой странице: " + result);
+           pageResult = pageResult.concat(verifyProductStyleOnPage(driver));         // Проверили стили на продуктовой странице
+           System.out.println("Ошибки на продуктовой странице: " + pageResult);
 
-           result.concat(compareProducts(productFromHome,productFromPage));     // Сравнили товары и сформировали результат
-           System.out.println("Ошибки сравнения продуктов: " + result);
+           compareResult = compareResult.concat(compareProducts(productFromHome,productFromPage));     // Сравнили товары и сформировали результат
+           System.out.println("Ошибки сравнения продуктов: " + compareResult);
 
-           if (result.equals(""))System.out.println("All ok");
+           if ((homeResult.equals("")) && (pageResult.equals("")) && (compareResult.equals(""))) System.out.println("All ok");
                 else Assert.fail();
 
        }
