@@ -10,9 +10,14 @@ class TestBase3 {
 
 //----------------------------------------------------------------------------------------------------
     //------ Driver Service functions
-    protected static void waitForElementAppears(WebDriver driver, By locator, Integer timeOutSeconds){
+    protected void waitForElementAppears(WebDriver driver, By locator, Integer timeOutSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeOutSeconds);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    protected void waitForElementClickable(WebDriver driver, By locator, Integer timeOutSeconds){
+        WebDriverWait wait = new WebDriverWait(driver, timeOutSeconds);
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     protected static WebDriver browserLaunch(String browserName){

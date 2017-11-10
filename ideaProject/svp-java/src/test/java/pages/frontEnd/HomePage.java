@@ -12,6 +12,15 @@ public class HomePage {
     public static By productRegularPriceLocator = By.cssSelector(".regular-price");
     public static By productCampaignPriceLocator = By.cssSelector(".campaign-price");
 
+    public static By registrationLinkLocator = By.linkText("New customers click here");
+    public static By logoutLinkLocator = By.linkText("Logout");
+
+    public static By emailInputLocator = By.cssSelector("input[name=email]");
+    public static By passwordInputLocator = By.cssSelector("input[name=password]");
+
+    public static By loginButtonLocator = By.cssSelector("button[name=login]");
+
+    public static By noticeSuccessLocator = By.cssSelector("div.notice.success");
 
     //------ Settings
     public static Integer pageTimeout = 10;

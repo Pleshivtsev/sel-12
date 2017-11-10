@@ -3,8 +3,10 @@ package driverService;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -25,7 +27,21 @@ public class SeleniumDriver {
     //------ Driver Service functions
 
     private void chromeLaunch(){    driver = new ChromeDriver();   }
+
+    private void chromeHeadlessLaunch(){
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new ChromeDriver(options);
+    }
+
     private void fireFoxLaunch(){   driver = new FirefoxDriver();  }
+
+    private void fireFoxHeadLessLaunch(){
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        options.setLegacy(false);
+        driver = new FirefoxDriver(options);
+    }
 
     private void fireFoxLegacyLaunch(){
         FirefoxOptions options = new FirefoxOptions();
@@ -49,7 +65,9 @@ public class SeleniumDriver {
     private WebDriver browserLaunch(String browserName){
         switch (browserName) {
             case "chrome"   : chromeLaunch(); break;
+            case "chromeHeadless"   : chromeHeadlessLaunch(); break;
             case "firefox"  : fireFoxLaunch(); break;
+            case "firefoxHeadless"  : fireFoxHeadLessLaunch(); break;
             case "firefoxLegacy"  : fireFoxLegacyLaunch(); break;
             case "firefoxNightly"  : ffNightlyLaunch(); break;
             case "ie"       : ieLaunch(); break;
@@ -59,5 +77,4 @@ public class SeleniumDriver {
         return driver;
 
     }
-
 }
