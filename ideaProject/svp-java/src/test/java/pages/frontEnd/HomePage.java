@@ -22,6 +22,8 @@ public class HomePage {
 
     public static By noticeSuccessLocator = By.cssSelector("div.notice.success");
 
+    public static By checkOutLinkLocator = By.linkText("Checkout »");
+
     //------ Settings
     public static Integer pageTimeout = 10;
     public static Integer elementsTimeout = 10;
