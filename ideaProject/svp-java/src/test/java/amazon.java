@@ -22,10 +22,11 @@ public class amazon {
         WebElement searchString;
 
         driver.get("https://www.amazon.com/");
-
         searchString = driver.findElement(By.id("twotabsearchtextbox"));
         searchString.sendKeys("selenium");
         searchString.submit();
+
+        driver.get("https://www.google.com/");
     }
 
     @After
