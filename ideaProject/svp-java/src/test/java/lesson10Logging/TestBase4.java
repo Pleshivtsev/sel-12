@@ -1,4 +1,4 @@
-package lesson8Windows;
+package lesson10Logging;
 
 import driverService.SeleniumDriver;
 import org.openqa.selenium.By;

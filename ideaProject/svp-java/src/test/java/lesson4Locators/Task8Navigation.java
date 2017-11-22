@@ -93,5 +93,4 @@ public class Task8Navigation extends TestBase2 {
         }
 
     }
-
 }
