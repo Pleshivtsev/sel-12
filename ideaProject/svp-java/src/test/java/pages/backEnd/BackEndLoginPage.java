@@ -14,5 +14,4 @@ public class BackEndLoginPage {
     public static Integer pageTimeout = 10;
     public static Integer elementsTimeout = 10;
 
-
 }
